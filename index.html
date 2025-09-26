@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ally Building Manager</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,800;1,14..32,800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+</head>
+
+<body>
+    <h1>Ally Building Manager</h1>
+
+    <div class="container">
+        <div class="form-section">
+            <form id="buildingForm">
+                <label>Name
+                    <input type="text" id="name" required placeholder="Name">
+                </label>
+                <label>Color Hex
+                    <input type="text" id="color" value="#6366F1" required placeholder="#6366F1">
+                </label>
+                <label>Level
+                    <input type="number" id="level" value="1" min="0">
+                </label>
+                <label>GeoPoint Coords
+                    <input type="text" id="pointA" placeholder="Lat,Long">
+                    <input type="text" id="pointB" placeholder="Lat,Long">
+                    <input type="text" id="pointC" placeholder="Lat,Long">
+                    <input type="text" id="pointD" placeholder="Lat,Long">
+                </label>
+                <button type="submit">Save</button>
+            </form>
+        </div>
+
+        <div class="list-section">
+            <h2>Building List</h2>
+            <button id="refreshList">Refresh</button>
+            <ul id="buildingList"></ul>
+            <div class="map-wrapper">
+                <h3>Map View</h3>
+                <div id="buildingMap"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin="" defer></script>
+    <script type="module" src="scripts/add-polygondata.js"></script>
+</body>
+
+</html>
