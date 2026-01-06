@@ -3,6 +3,7 @@ import {
     getFirestore,
     collection,
     doc,
+    setDoc,
     getDoc,
     getDocs,
     query,
@@ -346,3 +347,58 @@ export async function buildReportFromFirestore(opts = {}) {
         anchorDate: monthStart
     };
 }
+
+export async function addStudent(studentData) {
+    const { lrn, firstName, lastName, middleName, gradeLevel, teacherId, classHours } = studentData;
+
+    try {
+        const studentRef = doc(db, 'students', lrn); // Use LRN as ID
+        const studentDoc = await getDoc(studentRef);
+
+        if (studentDoc.exists()) {
+            throw new Error(`Student with LRN ${lrn} already exists.`);
+        }
+
+        // Extract dismissal time from classHours (e.g., "7:30AM - 5:00PM" -> "5:00PM")
+        let dismissalTime = "";
+        if (classHours && classHours.includes("-")) {
+            dismissalTime = classHours.split("-")[1].trim();
+        }
+
+        const fullName = `${firstName} ${middleName || ''} ${lastName}`.replace(/\s+/g, ' ').trim();
+
+        const newStudent = {
+            id: lrn,
+            authUid: "",
+            name: fullName,
+            // Keep individual name fields for easier editing/sorting if needed, though they aren't in the provided screenshot list, they are useful.
+            firstName: firstName || '',
+            lastName: lastName || '',
+            middleName: middleName || '',
+            
+            gradeLevel: gradeLevel || '',
+            teacherId: teacherId || '',
+            adviserId: teacherId || '', // Defaulting adviserId to teacherId
+            
+            classHours: classHours || '',
+            dismissalTime: dismissalTime,
+            
+            role: "student",
+            profileImageUrl: "",
+            recentActivity: "",
+            absenceReason: null,
+            absenceReasonSubmittedAt: null,
+            currentLocation: null,
+            
+            lastUpdated: Timestamp.now(),
+            createdAt: Timestamp.now()
+        };
+
+        await setDoc(studentRef, newStudent);
+        return { success: true, id: lrn };
+    } catch (error) {
+        console.error("Error adding student:", error);
+        throw error;
+    }
+}
+

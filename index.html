@@ -26,6 +26,7 @@
         <nav class="tab-bar" aria-label="Admin tools">
             <button class="tab-button is-active" data-tab-target="buildingPanel" type="button">Building Manager</button>
             <button class="tab-button" data-tab-target="sf2Panel" type="button">SF2 Daily Attendance</button>
+            <button class="tab-button" data-tab-target="studentPanel" type="button">Student Manager</button>
         </nav>
     </header>
 
@@ -156,10 +157,58 @@
                 <div id="error" class="error" hidden></div>
             </div>
         </section>
+
+        <section id="studentPanel" class="panel" aria-labelledby="student-tab">
+            <h2 id="student-tab">Student Manager</h2>
+            <div class="container">
+                <div class="form-section" style="max-width: 600px; margin: 0 auto;">
+                    <form id="studentForm">
+                        <label style="display:block; margin-bottom: 1rem;">
+                            <span>LRN (Student ID)</span>
+                            <input type="text" id="studentLrn" required placeholder="12-digit LRN" style="width: 100%; padding: 8px;">
+                        </label>
+                        
+                        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+                            <label>
+                                <span>First Name</span>
+                                <input type="text" id="studentFirstName" required placeholder="First Name" style="width: 100%; padding: 8px;">
+                            </label>
+                            <label>
+                                <span>Middle Name</span>
+                                <input type="text" id="studentMiddleName" placeholder="Middle Name" style="width: 100%; padding: 8px;">
+                            </label>
+                            <label>
+                                <span>Last Name</span>
+                                <input type="text" id="studentLastName" required placeholder="Last Name" style="width: 100%; padding: 8px;">
+                            </label>
+                        </div>
+
+                        <label style="display:block; margin-bottom: 1rem;">
+                            <span>Grade Level</span>
+                            <input type="text" id="studentGradeLevel" required placeholder="e.g. Grade 10-A" style="width: 100%; padding: 8px;">
+                        </label>
+
+                        <label style="display:block; margin-bottom: 1rem;">
+                            <span>Teacher ID / Adviser ID</span>
+                            <input type="text" id="studentTeacherId" required placeholder="Teacher ID" style="width: 100%; padding: 8px;">
+                        </label>
+
+                        <label style="display:block; margin-bottom: 1rem;">
+                            <span>Class Hours (Start - End)</span>
+                            <input type="text" id="studentClassHours" placeholder="e.g. 7:30 AM - 4:00 PM" style="width: 100%; padding: 8px;">
+                        </label>
+
+                        <button type="submit" style="padding: 10px 20px; background-color: #6366F1; color: white; border: none; border-radius: 4px; cursor: pointer;">Add Student</button>
+                    </form>
+                    <div id="studentMessage" class="message" style="margin-top: 1rem; font-weight: bold;"></div>
+                </div>
+            </div>
+        </section>
     </main>
 
     <script type="module" src="scripts/add-polygondata.js" defer></script>
     <script type="module" src="scripts/sf2-generator.js" defer></script>
+    <script type="module" src="scripts/student-manager.js" defer></script>
     <script type="module" src="scripts/app-shell.js" defer></script>
 </body>
 
