@@ -199,8 +199,45 @@
                         </label>
 
                         <button type="submit" style="padding: 10px 20px; background-color: #6366F1; color: white; border: none; border-radius: 4px; cursor: pointer;">Add Student</button>
+                        <button type="button" id="cancelEdit" style="padding: 10px 20px; background-color: #6B7280; color: white; border: none; border-radius: 4px; cursor: pointer; display: none; margin-left: 10px;">Cancel Edit</button>
                     </form>
                     <div id="studentMessage" class="message" style="margin-top: 1rem; font-weight: bold;"></div>
+                </div>
+
+                <div class="list-section">
+                    <h3>Student List</h3>
+                    <button id="refreshStudentList">Refresh</button>
+                    <div id="studentListFilters" style="margin: 1rem 0;">
+                        <label>
+                            Filter by Grade Level:
+                            <select id="gradeFilter">
+                                <option value="">All Grades</option>
+                            </select>
+                        </label>
+                        <label style="margin-left: 1rem;">
+                            Search by Name:
+                            <input type="text" id="nameSearch" placeholder="Search students..." style="padding: 4px;">
+                        </label>
+                    </div>
+                    <div id="studentListContainer">
+                        <table id="studentTable" style="width: 100%; border-collapse: collapse;">
+                            <thead>
+                                <tr style="background-color: #f3f4f6;">
+                                    <th style="border: 1px solid #d1d5db; padding: 8px; text-align: left;">LRN</th>
+                                    <th style="border: 1px solid #d1d5db; padding: 8px; text-align: left;">Name</th>
+                                    <th style="border: 1px solid #d1d5db; padding: 8px; text-align: left;">Grade Level</th>
+                                    <th style="border: 1px solid #d1d5db; padding: 8px; text-align: left;">Teacher ID</th>
+                                    <th style="border: 1px solid #d1d5db; padding: 8px; text-align: left;">Class Hours</th>
+                                    <th style="border: 1px solid #d1d5db; padding: 8px; text-align: center;">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="studentTableBody">
+                                <tr>
+                                    <td colspan="6" style="border: 1px solid #d1d5db; padding: 8px; text-align: center;">Loading students...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </section>

@@ -6,6 +6,7 @@ import {
     setDoc,
     getDoc,
     getDocs,
+    deleteDoc,
     query,
     where,
     orderBy,
@@ -398,6 +399,80 @@ export async function addStudent(studentData) {
         return { success: true, id: lrn };
     } catch (error) {
         console.error("Error adding student:", error);
+        throw error;
+    }
+}
+
+export async function getAllStudents() {
+    try {
+        const studentsRef = collection(db, 'students');
+        const snapshot = await getDocs(studentsRef);
+        const students = [];
+        
+        snapshot.forEach(doc => {
+            students.push({ id: doc.id, ...doc.data() });
+        });
+        
+        return students;
+    } catch (error) {
+        console.error("Error getting all students:", error);
+        throw error;
+    }
+}
+
+export async function updateStudent(lrn, studentData) {
+    try {
+        const studentRef = doc(db, 'students', lrn);
+        const studentDoc = await getDoc(studentRef);
+
+        if (!studentDoc.exists()) {
+            throw new Error(`Student with LRN ${lrn} not found.`);
+        }
+
+        const { firstName, lastName, middleName, gradeLevel, teacherId, classHours } = studentData;
+
+        // Extract dismissal time from classHours
+        let dismissalTime = "";
+        if (classHours && classHours.includes("-")) {
+            dismissalTime = classHours.split("-")[1].trim();
+        }
+
+        const fullName = `${firstName} ${middleName || ''} ${lastName}`.replace(/\s+/g, ' ').trim();
+
+        const updatedData = {
+            name: fullName,
+            firstName: firstName || '',
+            lastName: lastName || '',
+            middleName: middleName || '',
+            gradeLevel: gradeLevel || '',
+            teacherId: teacherId || '',
+            adviserId: teacherId || '',
+            classHours: classHours || '',
+            dismissalTime: dismissalTime,
+            lastUpdated: Timestamp.now()
+        };
+
+        await setDoc(studentRef, updatedData, { merge: true });
+        return { success: true, id: lrn };
+    } catch (error) {
+        console.error("Error updating student:", error);
+        throw error;
+    }
+}
+
+export async function deleteStudent(lrn) {
+    try {
+        const studentRef = doc(db, 'students', lrn);
+        const studentDoc = await getDoc(studentRef);
+
+        if (!studentDoc.exists()) {
+            throw new Error(`Student with LRN ${lrn} not found.`);
+        }
+
+        await deleteDoc(studentRef);
+        return { success: true, id: lrn };
+    } catch (error) {
+        console.error("Error deleting student:", error);
         throw error;
     }
 }
